@@ -1,7 +1,7 @@
 """
 # File       : Reranker.py
 # Time       ：2024/10/15 23:25
-# Author     ：xyshu
+# Author     ：xinyi
 # Description：排序模型
 """
 

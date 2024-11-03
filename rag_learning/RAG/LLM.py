@@ -1,7 +1,7 @@
 """
 # File       : LLM.py
 # Time       ：2024/10/15 23:25
-# Author     ：xyshu
+# Author     ：xinyi
 # Description：大模型的调用接口
 """
 

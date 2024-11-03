@@ -1,3 +1,9 @@
+"""
+# File       : VectorBase.py
+# Time       ：2024/10/20 23:25
+# Author     ：xinyi
+# Description：
+"""
 
 import os
 from langchain.chat_models import ChatOpenAI
