@@ -9,6 +9,6 @@
 项目中包含两个实现方式
 1. 基于langchain框架实现的rag系统
 >  python langchain_rag.py
-2. 不采用框架0-1实现rag系统
+2. 不采用框架0-1实现的rag系统
 > test_rag.ipynb
 
