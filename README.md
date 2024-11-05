@@ -8,5 +8,20 @@ root
 ├─tutorials       Langchain接口Demo
 │  
 
-## 文档说明
-To be continued
+## 项目说明
+### 1.RAG Learning 
+![rag流程](./imgs/rag_process.jpg)
+项目中包含两个实现方式
+1. 基于langchain框架实现的rag系统
+>  python langchain_rag.py
+2. 不采用框架0-1实现的rag系统
+> test_rag.ipynb
+
+
+### To Update
+1. vllm部署方式
+2. embedding模型finetune
+3. agent实现
+
+
+
