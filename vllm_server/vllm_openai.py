@@ -4,10 +4,9 @@
 @Author: xinyi
 @file:vllm_server.py
 @date: 2024/11/20 19:24
-@description:  vllm serve
+@description:  OpenAI接口单次请求
 @refer: https://qwen.readthedocs.io/zh-cn/latest/deployment/vllm.html#multi-gpu-distributed-serving
 """
-
 
 from openai import OpenAI
 # Set OpenAI's API key and API base to use vLLM's API server.
