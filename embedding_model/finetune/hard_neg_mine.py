@@ -4,10 +4,10 @@
 @Author: xinyi
 @file:hard_neg_mine.py
 @date: 2024/12/19 17:10
-@description:
+@description: 负例挖掘
 """
 
-
+import sys
 import argparse
 import json
 import random
@@ -19,10 +19,10 @@ from FlagEmbedding import FlagModel
 
 def get_args():
     parser = argparse.ArgumentParser()
-    parser.add_argument('--model_name_or_path', default="BAAI/bge-base-en", type=str)
-    parser.add_argument('--input_file', default=None, type=str)
+    parser.add_argument('--model_name_or_path', default="E:/PrivateWork/LLM/LLM_Backend/BAAI/bge-m3", type=str)
+    parser.add_argument('--input_file', default="./example_data/sts.jsonl", type=str)
     parser.add_argument('--candidate_pool', default=None, type=str)
-    parser.add_argument('--output_file', default=None, type=str)
+    parser.add_argument('--output_file', default="./example_data/out_neg_sts.jsonl", type=str)
     parser.add_argument('--range_for_sampling', default="10-210", type=str, help="range to sample negatives")
     parser.add_argument('--use_gpu_for_searching', action='store_true', help='use faiss-gpu')
     parser.add_argument('--negative_number', default=15, type=int, help='the number of negatives')
@@ -32,7 +32,9 @@ def get_args():
 
 
 def create_index(embeddings, use_gpu):
-    index = faiss.IndexFlatIP(len(embeddings[0]))
+    """ 根据内积（IndexFlatIP）去做相似度计算、排序
+    """
+    index = faiss.IndexFlatIP(len(embeddings[0]))  # 内积
     embeddings = np.asarray(embeddings, dtype=np.float32)
     if use_gpu:
         co = faiss.GpuMultipleClonerOptions()
@@ -43,16 +45,16 @@ def create_index(embeddings, use_gpu):
     return index
 
 
-def batch_search(index,
-                 query,
-                 topk: int = 200,
-                 batch_size: int = 64):
+def batch_search(index, query, topk: int = 200, batch_size: int = 64):
+    """ find top-k samples which are similar with query
+    """
     all_scores, all_inxs = [], []
     for start_index in tqdm(range(0, len(query), batch_size), desc="Batches", disable=len(query) < 256):
         batch_query = query[start_index:start_index + batch_size]
         batch_scores, batch_inxs = index.search(np.asarray(batch_query, dtype=np.float32), k=topk)
         all_scores.extend(batch_scores.tolist())
         all_inxs.extend(batch_inxs.tolist())
+    print(len(query), len(all_inxs))
     return all_scores, all_inxs
 
 
@@ -65,7 +67,16 @@ def get_corpus(candidate_pool):
 
 
 def find_knn_neg(model, input_file, candidate_pool, output_file, sample_range, negative_number, use_gpu):
-    corpus = []
+    """根据相似度排序， 随机挑选负例
+    :param model: embedding 模型
+    :param input_file: 输入数据file路径
+    :param candidate_pool: 自定义负例池子， default None
+    :param output_file: 输出数据file路径
+    :param sample_range: 负例筛选范围， list
+    :param negative_number: 负例数
+    :param use_gpu: gpu 使用否
+    """
+    corpus = []  # 所有的正例与负例集合
     queries = []
     train_data = []
     for line in open(input_file):
@@ -106,7 +117,7 @@ def find_knn_neg(model, input_file, candidate_pool, output_file, sample_range, n
             filtered_inx = random.sample(filtered_inx, negative_number)
         data['neg'] = [corpus[inx] for inx in filtered_inx]
 
-    with open(output_file, 'w') as f:
+    with open(output_file, 'w', encoding='utf-8') as f:
         for data in train_data:
             if len(data['neg']) < negative_number:
                 samples = random.sample(corpus, negative_number - len(data['neg']) + len(data['pos']))
@@ -118,10 +129,10 @@ def find_knn_neg(model, input_file, candidate_pool, output_file, sample_range, n
 if __name__ == '__main__':
     args = get_args()
     sample_range = args.range_for_sampling.split('-')
-    sample_range = [int(x) for x in sample_range]
+    sample_range = [int(x) for x in sample_range]  # 查找负例的位置范围： Top_n1-Top_n2
+    print(sample_range)
 
     model = FlagModel(args.model_name_or_path, query_instruction_for_retrieval=args.query_instruction_for_retrieval)
-
     find_knn_neg(model,
                  input_file=args.input_file,
                  candidate_pool=args.candidate_pool,

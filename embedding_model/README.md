@@ -5,9 +5,8 @@ Embedding Model Learning，主要包含Embedding Model的使用、预训练与fi
 
 ## 项目说明
 ### 1.tutorials
-1. ChatAPI相关组件的demo示例
-2. Chain的示例
-3. RAG示例
+1. beg模型使用的混合检索示例
+2. finetune的示例
 
 
 ### 2.Embedding Model

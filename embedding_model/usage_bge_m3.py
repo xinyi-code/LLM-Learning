@@ -36,6 +36,9 @@ s_dense = dense_emb_1 @ dense_emb_2.T
 print(f"---s_dense: {s_dense}")
 
 ################ Test2: lexical Retrival ################
+# you can see the weight for each token:
+print(model.convert_id_to_token(output_1['lexical_weights']))
+
 s_lex_10_20 = model.compute_lexical_matching_score(output_1['lexical_weights'][0], output_2['lexical_weights'][0])
 s_lex_10_21 = model.compute_lexical_matching_score(output_1['lexical_weights'][0], output_2['lexical_weights'][1])
 s_lex_11_20 = model.compute_lexical_matching_score(output_1['lexical_weights'][1], output_2['lexical_weights'][0])
