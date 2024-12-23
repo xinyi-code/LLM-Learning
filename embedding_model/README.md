@@ -12,10 +12,10 @@ Embedding Model Learning，主要包含Embedding Model的使用、预训练与fi
 ### Todo List
 实验对比  
 |实验     | precision| recall| f1|  
-|:-------- |:-----|:-----|:-----|   
-|电脑  | $1600|  
-|手机  | $12|  
-|导管  | $1|  
+|:--------|:-----|:-----|:-----|   
+|bge-m3  | ~| ~| ~|  
+|bge-m3-finetune | ~| ~| ~|  
+|other model  | ~| ~| ~|  
 
 
 
