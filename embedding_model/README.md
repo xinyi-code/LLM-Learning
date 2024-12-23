@@ -9,7 +9,8 @@ Embedding Model Learning，主要包含Embedding Model的使用、预训练与fi
 2. finetune的示例
 
 
-### 2.Embedding Model
+### Todo List
+实验对比
 
 
 
