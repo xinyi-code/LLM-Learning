@@ -26,7 +26,7 @@ root
 ### 3.LLM服务部署 (vllm_server)
 包含vllm部署、fastAPI部署、性能比较报告等
 
-### 4.embedding模型 (embedding_modelzhen)
+### 4.embedding模型 (embedding_model)
 主要为bge-m3模型的混合检索以及fine-tune例子
 
 ### To Update
