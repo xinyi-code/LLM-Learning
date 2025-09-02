@@ -3,10 +3,11 @@ LLM Learning手册，其中包含LLM API使用与RAG实现等实例
 
 ## 项目结构
 root  
+├─embedding_model  embedding_model pre-train  
 ├─data   
 ├─rag_learning    RAG实现  
-├─tutorials       Langchain接口Demo
-│  
+├─tutorials       Langchain接口Demo 
+├─vllm_server     vllm部署
 
 ## 项目说明
 ### 1.tutorials (tutorials)
@@ -16,7 +17,6 @@ root
 
 
 ### 2.RAG Learning (rag_learning)
-![rag流程](./imgs/rag_process.jpg)
 项目中包含两个实现方式
 1. 基于langchain框架实现的rag系统
 >  python langchain_rag.py
@@ -26,7 +26,7 @@ root
 ### 3.LLM服务部署 (vllm_server)
 包含vllm部署、fastAPI部署、性能比较报告等
 
-### 4.embedding模型 (embedding_modelzhen)
+### 4.embedding模型 (embedding_model)
 主要为bge-m3模型的混合检索以及fine-tune例子
 
 ### To Update
